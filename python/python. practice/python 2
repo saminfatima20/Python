@@ -1,0 +1,14 @@
+import random
+
+def dice_roller():
+    while True:
+        print("Rolling the dice...")
+        # Generates a random integer between 1 and 6 (inclusive)
+        roll = random.randint(1, 6)
+        print(f"You rolled a {roll}")
+
+        play_again = input("Roll again? (yes/no): ").lower()
+        if play_again != 'yes':
+            break
+
+dice_roller()
