@@ -1,0 +1,30 @@
+tasks = []
+
+def show_tasks():
+    if not tasks:
+        print("No tasks yet.")
+    else:
+        for i, task in enumerate(tasks, 1):
+            print(f"{i}. {task}")
+
+while True:
+    print("\n1. Add Task\n2. View Tasks\n3. Delete Task\n4. Exit")
+    choice = input("Choose: ")
+
+    if choice == "1":
+        tasks.append(input("Enter task: "))
+        print("Task added!")
+    elif choice == "2":
+        show_tasks()
+    elif choice == "3":
+        show_tasks()
+        index = int(input("Task number to delete: ")) - 1
+        if 0 <= index < len(tasks):
+            tasks.pop(index)
+            print("Task deleted!")
+    elif choice == "4":
+        break
+    else:
+        print("Invalid choice")
+        
+
