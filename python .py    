@@ -1,0 +1,83 @@
+import os
+
+FILENAME = "tasks.txt"
+
+def load_tasks():
+    """Load tasks from file."""
+    if not os.path.exists(FILENAME):
+        return []
+    
+    with open(FILENAME, "r") as file:
+        tasks = file.readlines()
+    
+    return [task.strip() for task in tasks]
+
+
+def save_tasks(tasks):
+    """Save tasks to file."""
+    with open(FILENAME, "w") as file:
+        for task in tasks:
+            file.write(task + "\n")
+
+
+def display_tasks(tasks):
+    """Display all tasks."""
+    if not tasks:
+        print("\nNo tasks found.")
+        return
+    
+    print("\nYour Tasks:")
+    for index, task in enumerate(tasks, start=1):
+        print(f"{index}. {task}")
+
+
+def add_task(tasks):
+    """Add a new task."""
+    task = input("Enter new task: ")
+    tasks.append(task)
+    save_tasks(tasks)
+    print("Task added successfully!")
+
+
+def delete_task(tasks):
+    """Delete a task by number."""
+    display_tasks(tasks)
+    
+    try:
+        task_number = int(input("Enter task number to delete: "))
+        if 1 <= task_number <= len(tasks):
+            removed = tasks.pop(task_number - 1)
+            save_tasks(tasks)
+            print(f"Removed task: {removed}")
+        else:
+            print("Invalid task number.")
+    except ValueError:
+        print("Please enter a valid number.")
+
+
+def main():
+    tasks = load_tasks()
+    
+    while True:
+        print("\n==== TO-DO LIST MENU ====")
+        print("1. View Tasks")
+        print("2. Add Task")
+        print("3. Delete Task")
+        print("4. Exit")
+        
+        choice = input("Choose an option (1-4): ")
+        
+        if choice == "1":
+            display_tasks(tasks)
+        elif choice == "2":
+            add_task(tasks)
+        elif choice == "3":
+            delete_task(tasks)
+        elif choice == "4":
+            print("Goodbye!")
+            break
+        else:
+            print("Invalid choice. Please select 1-4.")
+
+
+if __name__ == "__main__":
