@@ -1,0 +1,94 @@
+import json
+import os
+
+FILE_NAME = "students.json"
+
+def load_students():
+    if os.path.exists(FILE_NAME):
+        with open(FILE_NAME, "r") as file:
+            return json.load(file)
+    return []
+
+def save_students(students):
+    with open(FILE_NAME, "w") as file:
+        json.dump(students, file, indent=4)
+
+def add_student(students):
+    name = input("Enter student name: ")
+    age = input("Enter student age: ")
+    grade = input("Enter student grade: ")
+
+    student = {
+        "name": name,
+        "age": age,
+        "grade": grade
+    }
+
+    students.append(student)
+    save_students(students)
+    print("✅ Student added successfully!\n")
+
+def view_students(students):
+    if not students:
+        print("No students found.\n")
+        return
+
+    for i, student in enumerate(students, start=1):
+        print(f"{i}. Name: {student['name']}, Age: {student['age']}, Grade: {student['grade']}")
+    print()
+
+# Search student
+def search_student(students):
+    name = input("Enter student name to search: ")
+    found = False
+
+    for student in students:
+        if student["name"].lower() == name.lower():
+            print(f"Found: Name: {student['name']}, Age: {student['age']}, Grade: {student['grade']}\n")
+            found = True
+            break
+
+    if not found:
+        print("Student not found.\n")
+
+def delete_student(students):
+    name = input("Enter student name to delete: ")
+
+    for student in students:
+        if student["name"].lower() == name.lower():
+            students.remove(student)
+            save_students(students)
+            print("🗑 Student deleted successfully!\n")
+            return
+
+    print("Student not found.\n")
+
+def main():
+    students = load_students()
+
+    while True:
+        print("===== Student Management System =====")
+        print("1. Add Student")
+        print("2. View Students")
+        print("3. Search Student")
+        print("4. Delete Student")
+        print("5. Exit")
+
+        choice = input("Enter your choice: ")
+
+        if choice == "1":
+            add_student(students)
+        elif choice == "2":
+            view_students(students)
+        elif choice == "3":
+            search_student(students)
+        elif choice == "4":
+            delete_student(students)
+        elif choice == "5":
+            print("Goodbye!")
+            break
+        else:
+            print("Invalid choice. Try again.\n")
+
+if __name__ == "__main__":
+    main()
