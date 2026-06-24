@@ -1,0 +1,3 @@
+a=input("python programming")
+b=a.find("programming")
+print(b)
